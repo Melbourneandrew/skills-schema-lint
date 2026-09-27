@@ -50,13 +50,16 @@ function reporter(
     });
   };
 }
+function canonicalName(name: string, profile: ResolvedProfile): string {
+  return profile === Profile.OpenCode ? name : name.normalize("NFKC");
+}
 function validateName(
   name: string,
   file: string,
   profile: ResolvedProfile,
   report: ReturnType<typeof reporter>,
 ) {
-  const normalized = name.normalize("NFKC");
+  const normalized = canonicalName(name, profile);
   if (normalized !== name && [...normalized].length > 64)
     report("name", "Normalized name must be at most 64 characters.");
   const pattern =
@@ -72,7 +75,7 @@ function validateName(
       "name",
       "name must use lowercase letters, numbers, and single interior hyphens (ASCII for OpenCode).",
     );
-  if (normalized !== path.basename(path.dirname(file)).normalize("NFKC"))
+  if (normalized !== canonicalName(path.basename(path.dirname(file)), profile))
     report("name", "name must match the parent directory name.");
 }
 function unknownFields(

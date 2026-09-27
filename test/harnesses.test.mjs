@@ -91,3 +91,12 @@ for (const sidecar of [
     write(root, "skills/example/agents/openai.yaml", sidecar);
     assert.equal(validate({ workspace: root }).ok, false);
   });
+
+test("OpenCode rejects fullwidth names and requires raw directory equality", (t) => {
+  const root = workspace(t);
+  write(root, "skills/ｔｅｓｔ/SKILL.md", skill("", "ｔｅｓｔ"));
+  assert.equal(validate({ workspace: root, profile: "opencode" }).ok, false);
+  write(root, "skills/ｔｅｓｔ/SKILL.md", skill("", "test"));
+  assert.equal(validate({ workspace: root, profile: "opencode" }).ok, false);
+  assert.equal(validate({ workspace: root, profile: "spec" }).ok, true);
+});
