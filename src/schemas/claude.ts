@@ -1,0 +1,27 @@
+import {
+  optional,
+  string,
+  boolean,
+  choice,
+  mapping,
+  stringOrList,
+  type Shape,
+} from "./checks.js";
+export const claude: Shape = {
+  "argument-hint": optional(string()),
+  arguments: optional(stringOrList),
+  "disable-model-invocation": optional(boolean),
+  "user-invocable": optional(boolean),
+  "allowed-tools": optional(stringOrList),
+  "disallowed-tools": optional(stringOrList),
+  model: optional(string()),
+  effort: optional(choice("low", "medium", "high", "xhigh", "max")),
+  context: optional(choice("fork")),
+  agent: optional(string()),
+  background: optional(boolean),
+  hooks: optional(mapping),
+  paths: optional(stringOrList),
+  shell: optional(choice("bash", "powershell")),
+  when_to_use: optional(string()),
+  metadata: optional(mapping),
+};

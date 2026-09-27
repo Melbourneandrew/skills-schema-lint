@@ -1,0 +1,31 @@
+name: Skills Schema Lint
+description: Fast Agent Skills schema checks for Claude Code, Codex, Gemini, OpenCode, OpenClaw, and Cursor
+author: Andrew Melbourne
+branding:
+  icon: check-circle
+  color: blue
+inputs:
+  paths:
+    description: Newline-separated literal skill roots or SKILL.md paths, relative to the checked-out workspace. Empty discovers standard top-level roots.
+    required: false
+  profile:
+    description: "Schema profile: auto, spec, claude, codex, gemini, opencode, openclaw, or cursor"
+    default: auto
+  allow-empty:
+    description: Allow a successful run when no skills are found
+    default: "false"
+  fail-on-warnings:
+    description: Fail on advisory findings as well as errors
+    default: "false"
+outputs:
+  skills-checked:
+    description: Number of distinct physical SKILL.md files checked
+  errors:
+    description: Number of schema or discovery errors
+  warnings:
+    description: Number of advisory findings
+  duration-ms:
+    description: Validation duration in milliseconds, excluding Node startup and action download
+runs:
+  using: node24
+  main: dist/action.cjs

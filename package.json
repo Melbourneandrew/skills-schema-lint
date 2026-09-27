@@ -1,0 +1,31 @@
+{
+  "name": "@melbourneandrew/skills-schema-lint",
+  "version": "1.0.0",
+  "description": "Fast Agent Skills schema validation for GitHub Actions and the command line",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run build && npm test",
+    "bench": "node scripts/benchmark.mjs",
+    "lint": "eslint . --max-warnings 0",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.11.0",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.1",
+    "yaml": "2.9.1"
+  }
+}
