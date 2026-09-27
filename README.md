@@ -2,15 +2,44 @@
 
 [![CI](https://github.com/Melbourneandrew/skills-schema-lint/actions/workflows/ci.yml/badge.svg)](https://github.com/Melbourneandrew/skills-schema-lint/actions/workflows/ci.yml)
 
-Fast, offline schema checks for `SKILL.md` files across **Claude Code, Codex,
-Gemini CLI, OpenCode, OpenClaw, and Cursor**.
+A GitHub Action for checking agent skill files before they merge. It catches
+malformed YAML, missing required metadata, invalid field types, and skill names
+that do not match their directories, with findings attached to files in your PR.
 
-- One bundled JavaScript action. No `npm install`, Python, Docker, network calls,
-  or agent installation in your validation step.
-- TypeScript source, strict types, small modules, and readable schema tables.
-- A proven YAML parser, bundled at build time. **Zero runtime installation
-  dependencies**, not zero third-party code.
-- File/line annotations, numeric outputs, and a job summary.
+The baseline is the [Agent Skills specification](https://agentskills.io/specification).
+Harness profiles add checks for fields documented by
+[Claude Code](https://code.claude.com/docs/en/skills#frontmatter-reference),
+[Codex](https://learn.chatgpt.com/docs/build-skills),
+[Gemini CLI](https://geminicli.com/docs/cli/creating-skills/),
+[OpenCode](https://opencode.ai/docs/skills/),
+[OpenClaw](https://docs.openclaw.ai/tools/skills), and
+[Cursor](https://cursor.com/docs/skills). See [Research, references, and precedents](#research-references-and-precedents)
+for the reference implementations and related validators reviewed.
+
+## When to use it
+
+Use this when your team maintains a skill collection and wants a consistent
+schema check on every pull request:
+
+- **Shared skills:** choose `profile: spec` to enforce the portable format,
+  including rejecting fields outside the standard.
+- **Harness-specific skills:** choose a harness profile, or infer profiles from
+  conventional directory names, to validate supported extensions such as Claude
+  invocation controls and Codex `agents/openai.yaml` metadata.
+- **Multiple skill directories:** check them in one step, including grouped
+  collections and workspace-contained symlinks.
+- **Action-ready reporting:** get file/line annotations, error and warning counts,
+  and a job summary. Make advisory findings blocking with `fail-on-warnings`.
+
+The action ships as one bundled JavaScript file, so the validation step needs no
+package installation or agent setup. Its YAML parser is included in the bundle;
+there are no runtime installation dependencies.
+
+This checks file structure and metadata. It does not evaluate instruction quality,
+scan for malicious instructions, or prove that a skill works inside an agent.
+Harness profiles enforce the portable core plus supported extensions; they do not
+reproduce every loader's permissive behavior. Keep any repository-specific checks,
+such as Markdown link validation, alongside it.
 
 ## Use in GitHub Actions
 
