@@ -32,5 +32,5 @@ for (const [entry, format, outfile] of [
 const yaml = JSON.parse(readFileSync("node_modules/yaml/package.json", "utf8"));
 writeFileSync(
   "dist/THIRD-PARTY-NOTICES.txt",
-  `Bundled dependency: yaml ${yaml.version}\nSource: https://github.com/eemeli/yaml\n\n${readFileSync("node_modules/yaml/LICENSE", "utf8")}`,
+  `Bundled dependency: yaml ${yaml.version}\nLicense: ${yaml.license}\nSource: https://github.com/eemeli/yaml\n\n${readFileSync("node_modules/yaml/LICENSE", "utf8")}`,
 );

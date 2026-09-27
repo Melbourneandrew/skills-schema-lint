@@ -1,4 +1,5 @@
 Bundled dependency: yaml 2.9.1
+License: ISC
 Source: https://github.com/eemeli/yaml
 
 Copyright Eemeli Aro <eemeli@gmail.com>

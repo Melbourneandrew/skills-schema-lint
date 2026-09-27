@@ -294,5 +294,5 @@ separate GitHub publication step requiring the owner's acceptance of its terms.
 
 ## License
 
-MIT. The bundled YAML parser retains its own MIT notice in
+MIT. The bundled YAML parser retains its own ISC notice in
 [dist/THIRD-PARTY-NOTICES.txt](dist/THIRD-PARTY-NOTICES.txt).
