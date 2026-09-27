@@ -1,0 +1,32 @@
+name: Released action smoke test
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  consumer:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - name: Import published action
+        id: valid
+        uses: Melbourneandrew/skills-schema-lint@v1
+        with:
+          paths: test/fixtures/valid
+      - name: Verify published failure path
+        id: invalid
+        continue-on-error: true
+        uses: Melbourneandrew/skills-schema-lint@v1
+        with:
+          paths: test/fixtures/invalid
+      - name: Verify consumer outcomes
+        env:
+          VALID_COUNT: ${{ steps.valid.outputs.skills-checked }}
+          VALID_ERRORS: ${{ steps.valid.outputs.errors }}
+          INVALID_OUTCOME: ${{ steps.invalid.outcome }}
+          INVALID_ERRORS: ${{ steps.invalid.outputs.errors }}
+        run: node scripts/verify-action.mjs
